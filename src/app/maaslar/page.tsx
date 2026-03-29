@@ -1,9 +1,7 @@
 import { prisma } from "@/lib/db";
+import { hesaplaPercentileGrubu, formatMaas } from "@/lib/stats";
 import Link from "next/link";
-
-function formatMaas(maas: number) {
-  return new Intl.NumberFormat("tr-TR").format(maas) + " ₺";
-}
+import GiveToGet from "@/components/GiveToGet";
 
 function maskSirket(sirket: string) {
   if (sirket.length <= 3) return sirket + "***";
@@ -63,6 +61,7 @@ export default async function MaaslarPage({
     _count: true,
   });
 
+  const percentiler = hesaplaPercentileGrubu(maaslar.map((m) => m.maasAylik));
   const aktifFiltre = sektor || sehir;
 
   return (
@@ -142,20 +141,35 @@ export default async function MaaslarPage({
         </div>
       </form>
 
-      {/* Özet */}
+      {/* Özet + Percentile */}
       {maaslar.length > 0 && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-          {[
-            { label: "Kayıt", value: agg._count.toLocaleString("tr-TR"), color: "text-blue-600" },
-            { label: "Ortalama", value: formatMaas(Math.round(agg._avg.maasAylik ?? 0)), color: "text-emerald-600" },
-            { label: "En Yüksek", value: formatMaas(agg._max.maasAylik ?? 0), color: "text-violet-600" },
-            { label: "En Düşük", value: formatMaas(agg._min.maasAylik ?? 0), color: "text-orange-600" },
-          ].map((s) => (
-            <div key={s.label} className="bg-white rounded-xl p-4 border border-slate-200 text-center shadow-sm">
-              <div className={`text-xl font-bold ${s.color}`}>{s.value}</div>
-              <div className="text-xs text-slate-400 mt-0.5">{s.label}</div>
-            </div>
-          ))}
+        <div className="bg-white rounded-xl border border-slate-200 p-5 mb-6 shadow-sm">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="font-semibold text-slate-800 text-sm">Maaş Dağılımı</h2>
+            <span className="text-xs text-slate-400">{agg._count} kayıt</span>
+          </div>
+          <div className="space-y-3 mb-4">
+            {[
+              { label: "P25 — Alt çeyrek", value: percentiler.p25, renk: "bg-slate-300", bar: 25 },
+              { label: "P50 — Medyan", value: percentiler.p50, renk: "bg-blue-500", bar: 50 },
+              { label: "P75 — Üst çeyrek", value: percentiler.p75, renk: "bg-emerald-500", bar: 75 },
+              { label: "P90 — En yüksek %10", value: percentiler.p90, renk: "bg-violet-500", bar: 90 },
+            ].map((item) => (
+              <div key={item.label} className="flex items-center gap-3">
+                <div className="w-28 text-xs text-slate-500 shrink-0">{item.label}</div>
+                <div className="flex-1 bg-slate-100 rounded-full h-2">
+                  <div className={`h-2 rounded-full ${item.renk}`} style={{ width: `${item.bar}%` }} />
+                </div>
+                <div className="w-28 text-xs font-semibold text-slate-800 text-right">{formatMaas(item.value)}</div>
+              </div>
+            ))}
+          </div>
+          <div className="pt-3 border-t border-slate-100 flex justify-between text-xs text-slate-400">
+            <span>Ortalama: <strong className="text-slate-700">{formatMaas(percentiler.ortalama)}</strong></span>
+            <Link href={`/hesapla${sektor ? `?sektor=${encodeURIComponent(sektor)}` : ""}`} className="text-blue-600 hover:underline font-medium">
+              Kişisel hesapla →
+            </Link>
+          </div>
         </div>
       )}
 
@@ -170,6 +184,7 @@ export default async function MaaslarPage({
           </Link>
         </div>
       ) : (
+        <GiveToGet>
         <div className="space-y-3">
           {maaslar.map((m) => (
             <div
@@ -209,6 +224,7 @@ export default async function MaaslarPage({
             </div>
           ))}
         </div>
+        </GiveToGet>
       )}
     </div>
   );

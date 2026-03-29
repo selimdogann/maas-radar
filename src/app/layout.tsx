@@ -30,7 +30,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 href="/maaslar"
                 className="hidden sm:block text-slate-600 hover:text-slate-900 font-medium px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors text-sm"
               >
-                Maaşları Keşfet
+                Maaşlar
+              </Link>
+              <Link
+                href="/hesapla"
+                className="hidden sm:block text-slate-600 hover:text-slate-900 font-medium px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors text-sm"
+              >
+                Ne Almalıyım?
               </Link>
               <Link
                 href="/maas-ekle"

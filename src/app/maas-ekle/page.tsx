@@ -28,6 +28,7 @@ export default function MaasEklePage() {
     try {
       const formData = new FormData(e.currentTarget);
       await maasEkle(formData);
+      localStorage.setItem("maasPaylasildi", "true");
       setBasarili(true);
       setTimeout(() => router.push("/maaslar"), 2000);
     } catch {
