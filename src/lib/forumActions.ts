@@ -45,6 +45,14 @@ export async function mulakatEkle(formData: FormData) {
   revalidatePath("/mulakat");
 }
 
+export async function forumBeğeniArtir(postId: number) {
+  await prisma.forumPost.update({
+    where: { id: postId },
+    data: { begeni: { increment: 1 } },
+  });
+  revalidatePath("/forum");
+}
+
 export async function sirketYorumuEkle(formData: FormData) {
   const sirket = formData.get("sirket") as string;
   const pozisyon = formData.get("pozisyon") as string;

@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 import { prisma } from "@/lib/db";
 import { formatMaas, hesaplaPercentile } from "@/lib/stats";
 import PrintButton from "./PrintButton";
+import TrendGrafik from "./TrendGrafik";
 
 function ortalama(nums: number[]) {
   if (nums.length === 0) return 0;
@@ -135,6 +136,21 @@ export default async function RaporPage() {
           <span>{formatMaas(maxMaas)}</span>
         </div>
       </div>
+
+      {/* Sektör grafiği */}
+      {sektorIstatistik.length > 0 && (
+        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm mb-6 print:hidden">
+          <h2 className="font-bold text-slate-900 text-lg mb-1">Sektör Maaş Grafiği</h2>
+          <p className="text-slate-500 text-sm mb-4">Aylık ortalama brüt maaş (₺)</p>
+          <TrendGrafik
+            data={sektorIstatistik.map((s) => ({
+              sektor: s.sektor.split(" & ")[0],
+              ortalama: Math.round(s._avg.maasAylik ?? 0),
+              adet: s._count.sektor,
+            }))}
+          />
+        </div>
+      )}
 
       {/* Sektör bazlı */}
       <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm mb-6">

@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import ForumPostForm from "./ForumPostForm";
+import BeğeniButonu from "./BeğeniButonu";
 import Link from "next/link";
 
 const SEKTORLER = [
@@ -102,7 +103,8 @@ export default async function ForumPage({
                 </span>
               </div>
               <p className="text-slate-600 text-sm mb-3 leading-relaxed">{post.icerik}</p>
-              <div className="flex items-center gap-4 text-xs text-slate-400">
+              <div className="flex items-center gap-3 text-xs text-slate-400">
+                <BeğeniButonu postId={post.id} baslangic={post.begeni} />
                 <span>🕐 {zamanFarki(post.olusturuldu)}</span>
                 <span>💬 {post.yorumlar.length} yorum</span>
               </div>
