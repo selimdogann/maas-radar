@@ -57,6 +57,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 Şirketler
               </Link>
               <Link
+                href="/sirket-siralama"
+                className="hidden sm:block text-slate-600 hover:text-slate-900 font-medium px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors text-sm"
+              >
+                Sıralama
+              </Link>
+              <Link
+                href="/rehber"
+                className="hidden sm:block text-slate-600 hover:text-slate-900 font-medium px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors text-sm"
+              >
+                Rehber
+              </Link>
+              <Link
+                href="/rapor"
+                className="hidden sm:block text-slate-600 hover:text-slate-900 font-medium px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors text-sm"
+              >
+                Rapor
+              </Link>
+              <Link
                 href="/maas-ekle"
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors text-sm shadow-sm ml-1"
               >
