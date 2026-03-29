@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 Maaş<span className="text-blue-600">Radar</span>
               </span>
             </Link>
-            <nav className="flex items-center gap-2">
+            <nav className="flex items-center gap-1">
               <Link
                 href="/maaslar"
                 className="hidden sm:block text-slate-600 hover:text-slate-900 font-medium px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors text-sm"
@@ -39,8 +39,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 Ne Almalıyım?
               </Link>
               <Link
+                href="/forum"
+                className="hidden sm:block text-slate-600 hover:text-slate-900 font-medium px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors text-sm"
+              >
+                Forum
+              </Link>
+              <Link
+                href="/mulakat"
+                className="hidden sm:block text-slate-600 hover:text-slate-900 font-medium px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors text-sm"
+              >
+                Mülakat
+              </Link>
+              <Link
+                href="/sirketler"
+                className="hidden sm:block text-slate-600 hover:text-slate-900 font-medium px-3 py-2 rounded-lg hover:bg-slate-100 transition-colors text-sm"
+              >
+                Şirketler
+              </Link>
+              <Link
                 href="/maas-ekle"
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors text-sm shadow-sm"
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors text-sm shadow-sm ml-1"
               >
                 + Maaş Paylaş
               </Link>
