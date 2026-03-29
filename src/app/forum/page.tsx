@@ -97,16 +97,16 @@ export default async function ForumPage({
           {postlar.map((post) => (
             <div key={post.id} className="bg-white rounded-xl border border-slate-200 p-5 hover:border-blue-300 hover:shadow-sm transition-all">
               <div className="flex justify-between items-start mb-2 gap-3">
-                <h3 className="font-semibold text-slate-900 text-sm leading-snug">{post.baslik}</h3>
+                <Link href={`/forum/${post.id}`} className="font-semibold text-slate-900 text-sm leading-snug hover:text-blue-600 transition-colors">{post.baslik}</Link>
                 <span className={`text-xs font-medium px-2 py-0.5 rounded-full border shrink-0 ${getSektorRenk(post.sektor)}`}>
                   {post.sektor.split(" & ")[0]}
                 </span>
               </div>
-              <p className="text-slate-600 text-sm mb-3 leading-relaxed">{post.icerik}</p>
+              <p className="text-slate-600 text-sm mb-3 leading-relaxed line-clamp-2">{post.icerik}</p>
               <div className="flex items-center gap-3 text-xs text-slate-400">
                 <BeğeniButonu postId={post.id} baslangic={post.begeni} />
                 <span>🕐 {zamanFarki(post.olusturuldu)}</span>
-                <span>💬 {post.yorumlar.length} yorum</span>
+                <Link href={`/forum/${post.id}`} className="hover:text-blue-600 transition-colors">💬 {post.yorumlar.length} yorum</Link>
               </div>
             </div>
           ))}

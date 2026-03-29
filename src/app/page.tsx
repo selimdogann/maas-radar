@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
+import { hesaplaPercentile } from "@/lib/stats";
+import MaasimNeredeWidget from "@/components/MaasimNeredeWidget";
 
 async function getStats() {
   const toplam = await prisma.salary.count();
@@ -49,6 +51,11 @@ export default async function HomePage() {
   const { toplam, agg, sonMaaslar, sektorler } = await getStats();
   const ortalama = Math.round(agg._avg.maasAylik ?? 0);
   const maksimum = agg._max.maasAylik ?? 0;
+  const tumDegerler = (await prisma.salary.findMany({ select: { maasAylik: true } })).map((m) => m.maasAylik);
+  const widgetP25 = hesaplaPercentile(tumDegerler, 25);
+  const widgetP50 = hesaplaPercentile(tumDegerler, 50);
+  const widgetP75 = hesaplaPercentile(tumDegerler, 75);
+  const widgetP90 = hesaplaPercentile(tumDegerler, 90);
 
   return (
     <div>
@@ -84,7 +91,7 @@ export default async function HomePage() {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-14">
         {/* Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-14 -mt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8 -mt-10">
           {[
             { label: "Paylaşılan Maaş", value: toplam > 0 ? toplam.toLocaleString("tr-TR") : "0", color: "text-blue-600", icon: "📊" },
             { label: "Ortalama Maaş", value: ortalama > 0 ? formatMaas(ortalama) : "–", color: "text-emerald-600", icon: "💰" },
@@ -97,6 +104,13 @@ export default async function HomePage() {
             </div>
           ))}
         </div>
+
+        {/* Maaşım Nerede widget */}
+        {tumDegerler.length > 0 && (
+          <div className="mb-10 max-w-lg">
+            <MaasimNeredeWidget p25={widgetP25} p50={widgetP50} p75={widgetP75} p90={widgetP90} />
+          </div>
+        )}
 
         {/* Sektörler */}
         {sektorler.length > 0 && (

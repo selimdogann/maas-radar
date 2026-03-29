@@ -18,7 +18,20 @@ model Salary {
   bonusYillik    Int?
   calismaSekli   String
   egitimSeviyesi String
+  cinsiyet       String?  // "Kadın", "Erkek", "Diğer", null=belirtmek istemiyorum
   olusturuldu    DateTime @default(now())
+}
+
+model FreelanceRate {
+  id           Int      @id @default(autoincrement())
+  pozisyon     String
+  sektor       String
+  sehir        String
+  gunlukUcret  Int?
+  saatlikUcret Int?
+  deneyimYil   Int
+  calismaSekli String   // "Tam Remote", "Hibrit", "Yerinde"
+  olusturuldu  DateTime @default(now())
 }
 
 model ForumPost {
