@@ -12,10 +12,16 @@ const ANA_LINKLER = [
 ];
 
 const ARACLAR = [
+  { href: "/arama", label: "Arama", icon: "🔍" },
   { href: "/net-maas", label: "Brüt → Net Hesap", icon: "🧮" },
   { href: "/teklif", label: "Teklif Karşılaştır", icon: "⚖️" },
   { href: "/kidem", label: "Kıdem Tazminatı", icon: "📋" },
   { href: "/yasam-maliyeti", label: "Yaşam Maliyeti", icon: "🏙️" },
+  { href: "/enflasyon", label: "Enflasyon Hesaplama", icon: "📉" },
+  { href: "/egitim-roi", label: "Eğitim ROI", icon: "🎓" },
+  { href: "/kariyer-yolu", label: "Kariyer Yolu", icon: "🗺️" },
+  { href: "/maas-analizi", label: "Maaş Analizi", icon: "📈" },
+  { href: "/freelance", label: "Freelance Ücretleri", icon: "💻" },
   { href: "/sirket-siralama", label: "Şirket Sıralaması", icon: "🏆" },
   { href: "/rapor", label: "Maaş Raporu", icon: "📊" },
   { href: "/rehber", label: "Müzakere Rehberi", icon: "📚" },

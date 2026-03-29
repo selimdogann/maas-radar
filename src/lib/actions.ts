@@ -15,6 +15,7 @@ export async function maasEkle(formData: FormData) {
     : null;
   const calismaSekli = formData.get("calismaSekli") as string;
   const egitimSeviyesi = formData.get("egitimSeviyesi") as string;
+  const cinsiyet = (formData.get("cinsiyet") as string) || null;
 
   if (!sirket || !pozisyon || !sektor || !sehir || !calismaSekli || !egitimSeviyesi) {
     throw new Error("Tüm zorunlu alanları doldurun.");
@@ -31,6 +32,7 @@ export async function maasEkle(formData: FormData) {
       bonusYillik,
       calismaSekli,
       egitimSeviyesi,
+      cinsiyet,
     },
   });
 

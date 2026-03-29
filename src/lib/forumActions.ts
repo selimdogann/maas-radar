@@ -45,6 +45,24 @@ export async function mulakatEkle(formData: FormData) {
   revalidatePath("/mulakat");
 }
 
+export async function freelanceEkle(formData: FormData) {
+  const pozisyon = formData.get("pozisyon") as string;
+  const sektor = formData.get("sektor") as string;
+  const sehir = formData.get("sehir") as string;
+  const deneyimYil = parseInt(formData.get("deneyimYil") as string);
+  const calismaSekli = formData.get("calismaSekli") as string;
+  const saatlikUcret = parseInt(formData.get("saatlikUcret") as string) || null;
+  const gunlukUcret = parseInt(formData.get("gunlukUcret") as string) || null;
+
+  if (!pozisyon || !sektor || !sehir || !calismaSekli) throw new Error("Zorunlu alanları doldurun.");
+  if (!saatlikUcret && !gunlukUcret) throw new Error("En az bir ücret türü girin.");
+
+  await prisma.freelanceRate.create({
+    data: { pozisyon, sektor, sehir, deneyimYil, calismaSekli, saatlikUcret, gunlukUcret },
+  });
+  revalidatePath("/freelance");
+}
+
 export async function forumBeğeniArtir(postId: number) {
   await prisma.forumPost.update({
     where: { id: postId },

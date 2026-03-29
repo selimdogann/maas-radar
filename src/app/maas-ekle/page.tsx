@@ -153,7 +153,7 @@ export default function MaasEklePage() {
             </select>
           </div>
 
-          <div className="sm:col-span-2">
+          <div>
             <label className="block text-sm font-semibold text-slate-700 mb-1.5">
               Eğitim Seviyesi <span className="text-red-500">*</span>
             </label>
@@ -168,6 +168,22 @@ export default function MaasEklePage() {
               <option value="Lisans">Lisans</option>
               <option value="Yüksek Lisans">Yüksek Lisans</option>
               <option value="Doktora">Doktora</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-slate-700 mb-1.5">
+              Cinsiyet
+              <span className="text-slate-400 font-normal text-xs ml-1">opsiyonel · analiz için</span>
+            </label>
+            <select
+              name="cinsiyet"
+              className="w-full border border-slate-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-sm"
+            >
+              <option value="">Belirtmek istemiyorum</option>
+              <option value="Kadın">Kadın</option>
+              <option value="Erkek">Erkek</option>
+              <option value="Diğer">Diğer</option>
             </select>
           </div>
 
