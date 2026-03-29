@@ -20,3 +20,49 @@ model Salary {
   egitimSeviyesi String
   olusturuldu    DateTime @default(now())
 }
+
+model ForumPost {
+  id          Int       @id @default(autoincrement())
+  baslik      String
+  icerik      String
+  sektor      String
+  begeni      Int       @default(0)
+  olusturuldu DateTime  @default(now())
+  yorumlar    ForumYorum[]
+}
+
+model ForumYorum {
+  id          Int        @id @default(autoincrement())
+  icerik      String
+  begeni      Int        @default(0)
+  post        ForumPost  @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId      Int
+  olusturuldu DateTime   @default(now())
+}
+
+model Interview {
+  id              Int      @id @default(autoincrement())
+  sirket          String
+  pozisyon        String
+  zorluk          String   // "Kolay", "Orta", "Zor"
+  sonuc           String   // "Teklif Aldım", "Reddedildim", "Beklemede"
+  surec           String   // süreç açıklaması
+  sorular         String?  // opsiyonel - sorulan sorular
+  olumlu          Boolean  @default(true)
+  olusturuldu     DateTime @default(now())
+}
+
+model CompanyReview {
+  id             Int      @id @default(autoincrement())
+  sirket         String
+  pozisyon       String
+  kultur         Int      // 1-5
+  isYasamDengesi Int      // 1-5
+  yonetim        Int      // 1-5
+  kariyer        Int      // 1-5
+  maasYanHaklar  Int      // 1-5
+  tavsiyeEder    Boolean
+  olumluYon      String?
+  olumsuzYon     String?
+  olusturuldu    DateTime @default(now())
+}
