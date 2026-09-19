@@ -8,6 +8,14 @@ Salary data in Turkey is mostly hearsay — job postings say "market rate" and
 candidates guess. Maaş Radar turns scattered anecdotes into something you can
 filter, compare and cite.
 
+## Screenshots
+
+| Home | Salary listings |
+|---|---|
+| ![Home](docs/screenshots/01-anasayfa.png) | ![Salary listings](docs/screenshots/02-maaslar.png) |
+
+![Salary analysis](docs/screenshots/03-analiz.png)
+
 ## Features
 
 **Pay data**
