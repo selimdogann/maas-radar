@@ -47,3 +47,6 @@ prisma/dev.db-journal
 # local sqlite db
 /dev.db
 /dev.db-journal
+
+# .env.example izin ver (örnek yapılandırma paylaşılabilir)
+!.env.example
