@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Maaş Radar
 
-## Getting Started
+Anonymous salary transparency platform for Turkey. People share what they
+actually earn, and everyone else gets to walk into a negotiation knowing what
+the market pays.
 
-First, run the development server:
+Salary data in Turkey is mostly hearsay — job postings say "market rate" and
+candidates guess. Maaş Radar turns scattered anecdotes into something you can
+filter, compare and cite.
+
+## Features
+
+**Pay data**
+- Anonymous salary submissions — company, role, sector, city, years of
+  experience, monthly pay, annual bonus, work arrangement, education level
+- Freelance day and hour rates, broken down by remote / hybrid / on-site
+- Search and filtering across every dimension
+- Company rankings and trend charts
+
+**Company intelligence**
+- Company reviews rated 1–5 on culture, work-life balance, management, career
+  growth and pay/benefits, with pros and cons
+- Interview experiences — difficulty, outcome, the process and the questions asked
+- A community forum with posts, comments and likes
+
+**Calculators**
+- Gross-to-net salary calculator
+- Inflation-adjusted pay comparison
+- Cost-of-living comparison between cities
+- Seniority and career-path projections
+- Education ROI estimator
+- Offer comparison
+
+**Give to get** — you contribute a data point before you can browse the detailed
+breakdowns, which is what keeps the dataset from going stale.
+
+## Tech stack
+
+| | |
+|---|---|
+| Framework | Next.js (App Router) with React Server Components |
+| Language | TypeScript |
+| Data | Prisma ORM over SQLite |
+| Charts | Recharts |
+| Styling | Tailwind CSS |
+
+Mutations go through Next.js server actions (`src/lib/actions.ts`,
+`src/lib/forumActions.ts`) rather than API routes.
+
+## Data model
+
+Six Prisma models: `Salary`, `FreelanceRate`, `ForumPost`, `ForumYorum`,
+`Interview` and `CompanyReview`. No user accounts — nothing submitted is tied to
+an identity, which is the point. Gender is optional and nullable.
+
+See [`prisma/schema.prisma`](prisma/schema.prisma).
+
+## Running locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/selimdogann/maas-radar.git
+cd maas-radar
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Create a `.env` file:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+DATABASE_URL="file:./dev.db"
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Then set up the database and start the dev server:
 
-## Learn More
+```bash
+npx prisma migrate dev
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open http://localhost:3000.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project layout
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/            # routes — one folder per page
+│   ├── maaslar/        # salary listings
+│   ├── maas-ekle/      # submit a salary
+│   ├── sirketler/      # company reviews
+│   ├── mulakat/        # interview experiences
+│   ├── freelance/      # freelance rates
+│   ├── forum/          # community forum
+│   ├── net-maas/       # gross-to-net calculator
+│   ├── enflasyon/      # inflation comparison
+│   └── ...
+├── components/     # shared UI
+└── lib/            # server actions, stats, db client
+```
 
-## Deploy on Vercel
+## Status
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Personal project, actively developed. The schema and seed data are illustrative —
+this is not a production deployment and the numbers in `dev.db` are not real
+submissions.
